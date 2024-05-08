@@ -21,6 +21,8 @@ func SetupEmployeeHandlers(r *gin.RouterGroup, employeeService EmployeeService) 
 	{
 		adminEmployeesRouter.Use(middleware.AdminAuthMiddleware())
 		adminEmployeesRouter.POST("/create", handler.CreateEmployee)
+		adminEmployeesRouter.GET("/all", handler.FindAllEmployees)
+		
 	}
 
 	employeesRouter.POST("/login", handler.login)
@@ -59,6 +61,25 @@ func (h *EmployeeHandlers) login(c *gin.Context) {
 
 	if loginErr != nil {
 		c.AbortWithStatusJSON(loginErr.Code, loginErr.ToResponse())
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
+func (h *EmployeeHandlers) FindAllEmployees(c *gin.Context) {
+
+	input,err:=validator.DecodeAndValidateRequestBody[FindAllEmployeesInputDto](c.Request.Body)
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Code,err.ToResponse())
+		return
+	}
+
+	result, err := h.employeeService.FindAllEmployees(input)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, http_response.NewHttpResponseWithError(err.Error()))
 		return
 	}
 

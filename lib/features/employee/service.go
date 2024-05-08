@@ -14,6 +14,8 @@ type EmployeeService interface {
 	CreateEmployee(*CreateEmployeeInputDto) (*EmployeeDto, *http_response.HttpError)
 
 	Login(*EmployeeLoginInputDto) (*http_response.HttpResponse[string], *http_response.HttpError)
+
+	FindAllEmployees(input *FindAllEmployeesInputDto) (*http_response.HttpPagedResponse[EmployeeDto], *http_response.HttpError)
 }
 
 func NewEmployeeService(repo EmployeesRepository) EmployeeService {
@@ -69,4 +71,16 @@ func (s *employeeService) Login(input *EmployeeLoginInputDto) (*http_response.Ht
 	}
 	response := http_response.NewSuccessResponse[string](token)
 	return &response, nil
+}
+
+func (s *employeeService) FindAllEmployees(input *FindAllEmployeesInputDto) (*http_response.HttpPagedResponse[EmployeeDto], *http_response.HttpError) {
+	employees, err := s.employeeRepo.FindAllEmployees(input)
+
+	if err != nil {
+		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error fetching employees")
+	}
+
+	result:=http_response.NewPagedResponse(*employees)
+
+	return &result, nil
 }

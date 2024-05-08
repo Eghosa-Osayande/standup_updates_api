@@ -3,13 +3,12 @@ package updates
 import (
 	"net/http"
 	"standup-api/lib/utils/http_response"
-	"standup-api/lib/utils/pagination"
 )
 
 type UpdateService interface {
 	CreateUpdate(*CreateUpdateInputDto) (*http_response.HttpResponse[UpdateDto], *http_response.HttpError)
 
-	FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response.HttpResponse[pagination.CursorPage[UpdateDto]], error)
+	FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response.HttpResponse[http_response.CursorPage[UpdateDto]], error)
 }
 
 func NewUpdateService(updateRepo UpdatesRepository) UpdateService {
@@ -31,7 +30,7 @@ func (s *updateService) CreateUpdate(input *CreateUpdateInputDto) (*http_respons
 	return &response, nil
 }
 
-func (s *updateService) FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response.HttpResponse[pagination.CursorPage[UpdateDto]], error) {
+func (s *updateService) FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response.HttpResponse[http_response.CursorPage[UpdateDto]], error) {
 	result, err := s.updateRepo.FindUpdatesWhere(input)
 	if err != nil {
 		return nil, err

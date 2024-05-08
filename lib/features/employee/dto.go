@@ -19,3 +19,7 @@ type EmployeeLoginInputDto struct {
 	Name string `json:"name" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
+
+type FindAllEmployeesInputDto struct {
+	Cursor string `json:"cursor" validate:"required"`
+}

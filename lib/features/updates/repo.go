@@ -1,13 +1,13 @@
 package updates
 
-import "standup-api/lib/utils/pagination"
+import "standup-api/lib/utils/http_response"
 
 
 
 type UpdatesRepository interface {
 	CreateUpdate(*CreateUpdateInputDto) (*UpdateDto, error)
 	
-	FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*pagination .CursorPage[UpdateDto], error)
+	FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response .CursorPage[UpdateDto], error)
 }
 
 func NewUpdatesRepo() UpdatesRepository {
@@ -21,6 +21,6 @@ func (r *updatesRepo) CreateUpdate(input *CreateUpdateInputDto) (*UpdateDto, err
 	return &UpdateDto{}, nil
 }
 
-func (r *updatesRepo) FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*pagination.CursorPage[UpdateDto], error) {
-	return &pagination.CursorPage[UpdateDto]{}, nil
+func (r *updatesRepo) FindUpdatesWhere(input *FetchUpdatesWhereInputDto) (*http_response.CursorPage[UpdateDto], error) {
+	return &http_response.CursorPage[UpdateDto]{}, nil
 }
