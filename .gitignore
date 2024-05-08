@@ -1,2 +1,3 @@
 tmp/
-.Ds_Store
+.DS_Store
+.env
