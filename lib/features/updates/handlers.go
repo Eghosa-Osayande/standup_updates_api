@@ -22,6 +22,7 @@ func SetupUpdateHandlers(r *gin.RouterGroup, taskService UpdateService) {
 	{
 		employeeProtectedRouter.Use(middleware.EmployeeAuthMiddleware())
 		employeeProtectedRouter.POST("/create", handler.createUpdate)
+		employeeProtectedRouter.GET("/all", handler.fetchUpdate)
 	}
 }
 
@@ -34,6 +35,26 @@ func (h *UpdateHandlers) createUpdate(c *gin.Context) {
 	}
 
 	result, err := h.updateService.CreateUpdate(input)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, http_response.NewHttpResponseWithError(err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
+
+func (h *UpdateHandlers) fetchUpdate(c *gin.Context) {
+
+	input, err := validator.DecodeAndValidateRequestBody[FetchUpdatesWhereInputDto](c.Request.Body)
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Code,err.ToResponse())
+		return
+	}
+
+	result, err := h.updateService.FindUpdatesWhere(input)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, http_response.NewHttpResponseWithError(err.Error()))

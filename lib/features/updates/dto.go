@@ -1,6 +1,9 @@
 package updates
 
-import "time"
+import (
+	"standup-api/lib/common/dto"
+	"time"
+)
 
 type CreateUpdateInputDto struct {
 	EmployeeID  string       `json:"employee_id" validate:"required"`
@@ -12,12 +15,12 @@ type CreateUpdateInputDto struct {
 }
 
 type FetchUpdatesWhereInputDto struct {
-	EmployeeID *string    `json:"employee_id"`
-	SprintId   *string    `json:"sprint_id"`
+	EmployeeID *string    `json:"employee_id" `
+	SprintId   *string    `json:"sprint_id" validate:"required"`
 	WeekNumber *int       `json:"week_number"`
 	DayNumber  *int       `json:"day_number"`
-	DateBefore *time.Time `json:"date_before"`
-	DateAfter  *time.Time `json:"date_after"`
+	DateBefore *dto.JsonDate `json:"date_before"`
+	DateAfter  *dto.JsonDate `json:"date_after"`
 }
 
 type UpdateDto struct {
