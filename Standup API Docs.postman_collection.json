@@ -574,22 +574,25 @@
 				},
 				{
 					"name": "Fetch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTUxNTkxMTQsImN1c3RvbV9jbGFpbXMiOnsicm9sZSI6ImVtcGxveWVlIn19._Oy6-HujWxibRMMBhV0VlM3OovFj4udigDko2M8_XLI",
+									"value": "{{admin_token}}",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"employee_id\":\"h\",\n    \"sprint_id\":\"j\",\n    \"yesterday\":\"Nothing\",\n    \"today\":\"Nothing\",\n    \"blocked_by\":[],\n    \"breakaway\":\"Nothing\"\n}",
+							"raw": "{\n    \"page\":1,\n    \"per_page\":20,\n    \"employee_id\":\"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n    \"sprint_id\":\"75e9c7d8-0e01-11ef-a4bd-e794c3f16063\",\n    \"start_date\":\"2024-05-08\",\n    \"end_date\":\"2024-05-09\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -597,17 +600,63 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseurl}}/updates/create",
+							"raw": "{{baseurl}}/updates/all",
 							"host": [
 								"{{baseurl}}"
 							],
 							"path": [
 								"updates",
-								"create"
+								"all"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Fetch",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"page\":1,\n    \"per_page\":20,\n    \"employee_id\":\"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n    \"sprint_id\":\"75e9c7d8-0e01-11ef-a4bd-e794c3f16063\",\n    \"start_date\":\"2024-05-08\",\n    \"end_date\":\"2024-05-09\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}/updates/all",
+									"host": [
+										"{{baseurl}}"
+									],
+									"path": [
+										"updates",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 14:18:35 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "409"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": \"7e0b5abc-0e01-11ef-a4bd-8348477b0c82\",\n            \"employee_id\": \"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n            \"employee_name\": \"admin\",\n            \"sprint_id\": \"75e9c7d8-0e01-11ef-a4bd-e794c3f16063\",\n            \"created_at\": \"2024-05-09T12:41:44.419646+01:00\",\n            \"yesterday\": \"Nothing\",\n            \"today\": \"Nothing\",\n            \"blocked_by\": [],\n            \"breakaway\": \"Nothing\",\n            \"status\": \"within standup\"\n        }\n    ],\n    \"cursor\": {\n        \"next_page\": 2,\n        \"per_page\": 20\n    }\n}"
+						}
+					]
 				}
 			]
 		}

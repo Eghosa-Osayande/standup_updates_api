@@ -4,12 +4,16 @@ import (
 	"errors"
 	"net/http"
 	"os"
-	"standup-api/lib/common/dto"
 	"standup-api/lib/utils/http_response"
 	"standup-api/lib/utils/jwt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	RoleAdmin    string = "admin"
+	RoleEmployee string = "employee"
 )
 
 func extractClaims(authHeader string) (*jwt.JWTData, error) {
@@ -41,7 +45,7 @@ func AdminAuthMiddleware() gin.HandlerFunc {
 		}
 
 		role := data.CustomClaims["role"].(string)
-		if role != dto.RoleAdmin {
+		if role != RoleAdmin {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, http_response.NewHttpResponseWithError("Unauthorized"))
 			return
 		}
@@ -62,7 +66,7 @@ func EmployeeAuthMiddleware() gin.HandlerFunc {
 		}
 
 		role := data.CustomClaims["role"].(string)
-		if role != dto.RoleAdmin && role != dto.RoleEmployee {
+		if role != RoleAdmin && role != RoleEmployee {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, http_response.NewHttpResponseWithError("Unauthorized"))
 			return
 		}

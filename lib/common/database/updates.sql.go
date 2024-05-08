@@ -13,9 +13,19 @@ import (
 
 const createUpdate = `-- name: CreateUpdate :one
 Insert into
-    updates ( employee_id, sprint_id, yesterday, today, blocked_by, breakaway, check_in_time, status, tasks)
+    updates (
+        employee_id,
+        sprint_id,
+        yesterday,
+        today,
+        blocked_by,
+        breakaway,
+        check_in_time,
+        status,
+        tasks
+    )
 values
-    ( $1, $2, $3, $4, $5, $6, $7, $8, $9) Returning id, created_at, employee_id, sprint_id, yesterday, today, blocked_by, breakaway, check_in_time, status, tasks
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9) Returning id, created_at, employee_id, sprint_id, yesterday, today, blocked_by, breakaway, check_in_time, status, tasks
 `
 
 type CreateUpdateParams struct {
@@ -57,4 +67,102 @@ func (q *Queries) CreateUpdate(ctx context.Context, arg CreateUpdateParams) (Upd
 		&i.Tasks,
 	)
 	return i, err
+}
+
+const fetchAllUpdates = `-- name: FetchAllUpdates :many
+Select
+    updates.id, updates.created_at, updates.employee_id, updates.sprint_id, updates.yesterday, updates.today, updates.blocked_by, updates.breakaway, updates.check_in_time, updates.status, updates.tasks,
+    employees.name as employee_name
+from
+    updates
+    join employees on updates.employee_id = employees.id
+    join sprints on updates.sprint_id = sprints.id
+where
+    (
+        updates.sprint_id = $1
+        or $1 IS NULL
+    )
+    AND
+    (
+        updates.employee_id = $2
+        or $2 IS NULL
+    )
+    AND
+    (
+        updates.created_at >= $3
+        or $3 IS NULL
+    )
+    AND
+    (
+        updates.created_at <= $4
+        or $4 IS NULL
+    )
+ORDER BY
+    sprints.created_at DESC
+limit
+    $6 offset $5
+`
+
+type FetchAllUpdatesParams struct {
+	SprintID   pgtype.UUID        `db:"sprint_id" json:"sprint_id"`
+	EmployeeID pgtype.UUID        `db:"employee_id" json:"employee_id"`
+	StartDate  pgtype.Timestamptz `db:"start_date" json:"start_date"`
+	EndDate    pgtype.Timestamptz `db:"end_date" json:"end_date"`
+	Offset     pgtype.Int4        `db:"offset" json:"offset"`
+	Limit      pgtype.Int4        `db:"limit" json:"limit"`
+}
+
+type FetchAllUpdatesRow struct {
+	ID           pgtype.UUID        `db:"id" json:"id"`
+	CreatedAt    pgtype.Timestamptz `db:"created_at" json:"created_at"`
+	EmployeeID   pgtype.UUID        `db:"employee_id" json:"employee_id"`
+	SprintID     pgtype.UUID        `db:"sprint_id" json:"sprint_id"`
+	Yesterday    string             `db:"yesterday" json:"yesterday"`
+	Today        string             `db:"today" json:"today"`
+	BlockedBy    []string           `db:"blocked_by" json:"blocked_by"`
+	Breakaway    string             `db:"breakaway" json:"breakaway"`
+	CheckInTime  pgtype.Timestamptz `db:"check_in_time" json:"check_in_time"`
+	Status       string             `db:"status" json:"status"`
+	Tasks        []string           `db:"tasks" json:"tasks"`
+	EmployeeName string             `db:"employee_name" json:"employee_name"`
+}
+
+func (q *Queries) FetchAllUpdates(ctx context.Context, arg FetchAllUpdatesParams) ([]FetchAllUpdatesRow, error) {
+	rows, err := q.db.Query(ctx, fetchAllUpdates,
+		arg.SprintID,
+		arg.EmployeeID,
+		arg.StartDate,
+		arg.EndDate,
+		arg.Offset,
+		arg.Limit,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []FetchAllUpdatesRow
+	for rows.Next() {
+		var i FetchAllUpdatesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.CreatedAt,
+			&i.EmployeeID,
+			&i.SprintID,
+			&i.Yesterday,
+			&i.Today,
+			&i.BlockedBy,
+			&i.Breakaway,
+			&i.CheckInTime,
+			&i.Status,
+			&i.Tasks,
+			&i.EmployeeName,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
