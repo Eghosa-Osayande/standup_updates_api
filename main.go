@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"standup-api/lib/common/database"
 	"standup-api/lib/features/admin"
 	"standup-api/lib/features/employee"
@@ -13,19 +12,13 @@ import (
 )
 
 func main() {
-	
+
 	err := godotenv.Load()
 	if err != nil {
-		panic("Error loading .env file")
+		panic("Error loading environment variables")
 	}
 
-	dbUrl, ok := os.LookupEnv("DBURL")
-
-	if !ok {
-		panic("DBURL not found")
-	}
-
-	db, err := database.GetDB(dbUrl)
+	db, err := database.GetDB()
 
 	if err != nil {
 		panic(err)
