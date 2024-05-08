@@ -14,12 +14,15 @@
 This repository includes a postman collection for testing purposes.
 
 ### Employee
-#### Login Employee
+#### LOGIN EMPLOYEE
 Returns the access token
 
 **path**: `/v1/employees/login`
+
 **method**: `POST`
+
 **authorization**: `none`
+
 ##### Body
 ```json
 {
@@ -35,12 +38,15 @@ Returns the access token
 }
 ```
 
-#### Create Employee
+#### CREATE EMPLOYEE
 Only employees with `admin` roles can create new employees
 
 **path**: `/v1/employees/create`
+
 **method**: `POST`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
@@ -60,12 +66,15 @@ Only employees with `admin` roles can create new employees
 }
 ```
 
-#### Fetch All Employees 
+#### FETCH EMPLOYEES
 Only employees with `admin` roles can see all employees.
 
 **path**: `/v1/employees/all`
+
 **method**: `GET`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
@@ -102,12 +111,15 @@ Only employees with `admin` roles can see all employees.
 ```
 
 ### Sprint
-#### Create Sprint 
+#### CREATE SPRINT
 Only employees with `admin` roles can create sprints.
 
 **path**: `/v1/sprints/create`
+
 **method**: `POST`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
@@ -131,11 +143,14 @@ Only employees with `admin` roles can create sprints.
 }
 ```
 
-#### Fetch All Sprints 
+#### FETCH SPRINTS
 
 **path**: `/v1/sprints/all`
+
 **method**: `GET`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
@@ -165,11 +180,14 @@ Only employees with `admin` roles can create sprints.
 ```
 
 ### Updates
-#### Submit Update 
+#### SUBMIT UPDATE
 
 **path**: `/v1/updates/create`
+
 **method**: `POST`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
@@ -202,11 +220,14 @@ Only employees with `admin` roles can create sprints.
 }
 ```
 
-#### Fetch All Updates 
+#### FETCH UPDATES
 
 **path**: `/v1/updates/all`
+
 **method**: `GET`
+
 **authorization**: `Bearer Token`
+
 ##### Body
 ```json
 {
