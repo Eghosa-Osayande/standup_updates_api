@@ -32,3 +32,6 @@ type SprintDto struct {
 	StandupStartTime time.Time `json:"standup_start_time"`
 	StandupEndTime   time.Time `json:"standup_end_time"`
 }
+type FetchSprintsInputDto struct {
+	Cursor string `json:"cursor" validate:"required"`
+}

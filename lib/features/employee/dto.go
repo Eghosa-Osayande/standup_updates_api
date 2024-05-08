@@ -3,7 +3,7 @@ package employee
 import "time"
 
 type CreateEmployeeInputDto struct {
-	Name string `json:"name" validate:"required"`
+	Name     string `json:"name" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
 
@@ -16,10 +16,10 @@ type EmployeeDto struct {
 }
 
 type EmployeeLoginInputDto struct {
-	Name string `json:"name" validate:"required"`
+	Name     string `json:"name" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
 
-type FindAllEmployeesInputDto struct {
+type FetchEmployeesInputDto struct {
 	Cursor string `json:"cursor" validate:"required"`
 }

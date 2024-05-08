@@ -5,7 +5,7 @@ import "standup-api/lib/utils/http_response"
 type EmployeesRepository interface {
 	CreateEmployee(*CreateEmployeeInputDto) (*EmployeeDto, error)
 	GetEmployeeByName(string) (*EmployeeDto, error)
-	FindAllEmployees(input *FindAllEmployeesInputDto) (*http_response.CursorPage[EmployeeDto], error)
+	FindAllEmployees(input *FetchEmployeesInputDto) (*http_response.CursorPage[EmployeeDto], error)
 }
 
 func NewEmployeeRepo() EmployeesRepository {
@@ -20,9 +20,9 @@ func (r *employeeRepo) CreateEmployee(input *CreateEmployeeInputDto) (*EmployeeD
 }
 
 func (r *employeeRepo) GetEmployeeByName(name string) (*EmployeeDto, error) {
-	return &EmployeeDto{Name: name,Password:"" }, nil
+	return &EmployeeDto{Name: name, Password: ""}, nil
 }
 
-func (r *employeeRepo) FindAllEmployees(input *FindAllEmployeesInputDto) (*http_response.CursorPage[EmployeeDto], error) {
+func (r *employeeRepo) FindAllEmployees(input *FetchEmployeesInputDto) (*http_response.CursorPage[EmployeeDto], error) {
 	return &http_response.CursorPage[EmployeeDto]{}, nil
 }

@@ -9,6 +9,7 @@ type SprintService interface {
 	CreateSprint(*CreateSprintInputDto) (*SprintDto, *http_response.HttpError)
 	UpdateSprint(*UpdateSprintInputDto) (*SprintDto, *http_response.HttpError)
 	StartSprint() (*SprintDto, *http_response.HttpError)
+	FetchAllSprints(input *FetchSprintsInputDto) (*http_response.HttpPagedResponse[SprintDto], *http_response.HttpError)
 }
 
 func NewSprintService(repo SprintsRepository) SprintService {
@@ -48,4 +49,15 @@ func (s *sprintService) StartSprint() (*SprintDto, *http_response.HttpError) {
 	// }
 
 	return nil, http_response.NewHttpError(409, "sprint already started")
+}
+
+func (s *sprintService) FetchAllSprints(input *FetchSprintsInputDto) (*http_response.HttpPagedResponse[SprintDto], *http_response.HttpError) {
+	sprints, err := s.sprintRepo.FetchAllSprints(input)
+	if err != nil {
+		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error fetching sprints")
+	}
+
+	result := http_response.NewPagedResponse(*sprints)
+
+	return &result, nil
 }

@@ -14,14 +14,20 @@ type SprintHandlers struct {
 
 func SetupSprintHandlers(r *gin.RouterGroup, sprintService SprintService) {
 	var handler = SprintHandlers{sprintService: sprintService}
-	SprintRouter := r.Group("/sprints")
+	sprintRouter := r.Group("/sprints")
 
-	adminSprintRouter := SprintRouter.Group("")
+	adminProtectedRouter := sprintRouter.Group("")
 	{
-		adminSprintRouter.Use(middleware.AdminAuthMiddleware())
-		adminSprintRouter.POST("/create", handler.createSprint)
-		adminSprintRouter.POST("/start", handler.startSprint)
+		adminProtectedRouter.Use(middleware.AdminAuthMiddleware())
+		adminProtectedRouter.POST("/create", handler.createSprint)
+		adminProtectedRouter.POST("/start", handler.startSprint)
 		// adminSprintRouter.POST("/end", handler.endSprint)
+	}
+
+	employeeProtectedRouter := sprintRouter.Group("")
+	{
+		employeeProtectedRouter.Use(middleware.EmployeeAuthMiddleware())
+		employeeProtectedRouter.GET("/all", handler.fetchAllSprints)
 	}
 }
 
@@ -56,4 +62,23 @@ func (h *SprintHandlers) startSprint(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK,"")
+}
+
+func (h *SprintHandlers) fetchAllSprints(c *gin.Context) {
+
+	input,err:= validator.DecodeAndValidateRequestBody[FetchSprintsInputDto](c.Request.Body)
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Code,err.ToResponse())
+		return
+	}
+	
+	result, err := h.sprintService.FetchAllSprints(input)
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Code, err.ToResponse())
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
 }
