@@ -36,5 +36,7 @@ func main() {
 		sprint.SetupSprintHandlers(v1, sprintService)
 	}
 
+	
+
 	router.Run(":8080")
 }

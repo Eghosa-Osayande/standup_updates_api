@@ -27,10 +27,10 @@ func (h *AdminHandlers) Login(c *gin.Context) {
 		return
 	}
 
-	result, err := h.AdminService.Login(body)
+	result, loginErr := h.AdminService.Login(body)
 
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, http_response.NewHttpResponseWithError(err.Error()))
+	if loginErr != nil {
+		c.JSON(loginErr.Code,loginErr.ToResponse())
 		return
 	}
 

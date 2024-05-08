@@ -21,3 +21,11 @@ func NewResponseFromError(err *HttpError) HttpResponse[any] {
 		Data:    nil,
 	}
 }
+
+func NewSuccessResponse[T any](data T) HttpResponse[T] {
+	return HttpResponse[T]{
+		Status:  true,
+		Message: "success",
+		Data:    data,
+	}
+}

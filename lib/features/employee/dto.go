@@ -14,3 +14,8 @@ type EmployeeDto struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+type EmployeeLoginInputDto struct {
+	Name string `json:"name" validate:"required"`
+	Password string `json:"password" validate:"required"`
+}

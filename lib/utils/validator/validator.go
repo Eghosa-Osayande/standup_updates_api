@@ -5,7 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
+	"net/http"
+	"standup-api/lib/utils/http_response"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
@@ -16,8 +17,7 @@ func decodeRequestBody[T any](closer io.Reader) (*T, error) {
 	output := new(T)
 
 	if err := json.NewDecoder(closer).Decode(output); err != nil {
-		log.Println(err)
-		return nil, errors.New(err.Error())
+		return nil, err
 	}
 
 	return output, nil
@@ -58,18 +58,18 @@ func validateInput(input any) error {
 
 }
 
-func DecodeAndValidateRequestBody[T any](closer io.Reader) (*T, error) {
+func DecodeAndValidateRequestBody[T any](closer io.Reader) (*T, *http_response.HttpError) {
 
 	input, err := decodeRequestBody[T](closer)
 
 	if err != nil {
-		return nil, err
+		return nil, http_response.NewHttpError(http.StatusBadRequest, "invalid request body")
 	}
 
 	err = validateInput(input)
 
 	if err != nil {
-		return nil, err
+		return nil, http_response.NewHttpError(http.StatusBadRequest, err.Error())
 	}
 
 	return input, nil
