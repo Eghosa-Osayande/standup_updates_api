@@ -34,6 +34,14 @@ func (h *UpdateHandlers) createUpdate(c *gin.Context) {
 		return
 	}
 
+	userId,ok:=c.Get("user_id")
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, http_response.NewHttpResponseWithError("employee not found"))
+		return
+	}
+
+	input.EmployeeID=userId.(string)
+
 	result, err := h.updateService.CreateUpdate(input)
 
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 )
 
 type CreateUpdateInputDto struct {
-	EmployeeID  string       `json:"employee_id" validate:"required"`
+	EmployeeID  string       `json:"employee_id" validate:"omitempty"`
 	SprintID    string       `json:"sprint_id" validate:"required"`
 	Yesterday   string       `json:"yesterday" validate:"required"`
 	Today       string       `json:"today" validate:"required"`
@@ -20,8 +20,8 @@ type FetchUpdatesWhereInputDto struct {
 	SprintId   *string    `json:"sprint_id" validate:"required"`
 	WeekNumber *int       `json:"week_number"`
 	DayNumber  *int       `json:"day_number"`
-	DateBefore *dto.JsonDate `json:"date_before"`
-	DateAfter  *dto.JsonDate `json:"date_after"`
+	// DateBefore *dto.JsonDate `json:"date_before"`
+	// DateAfter  *dto.JsonDate `json:"date_after"`
 }
 
 type UpdateDto struct {
@@ -34,7 +34,7 @@ type UpdateDto struct {
 	Today        string       `json:"today"`
 	BlockedBy    []string     `json:"blocked_by"`
 	Breakaway    string       `json:"breakaway"`
-	CheckInTime  time.Time    `json:"check_in_time"`
+	CheckInTime  dto.Json24HrTime    `json:"check_in_time"`
 	Status       UpdateStatus `json:"status"`
 }
 

@@ -9,5 +9,6 @@ func EmployeeModelToDto(m *database.Employee) *EmployeeDto {
 		Name:      m.Name,
 		Password:  m.Password,
 		CreatedAt: m.CreatedAt.Time,
+		Role:      m.Role,
 	}
 }

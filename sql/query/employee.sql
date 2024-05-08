@@ -1,8 +1,8 @@
 -- name: CreateEmployee :one
 Insert into
-    employees ( name, password)
+    employees ( name, password,role)
 values
-    ( $1, $2) Returning *;
+    ( $1, $2, $3) Returning *;
 
 -- name: FetchAllEmployees :many
 Select

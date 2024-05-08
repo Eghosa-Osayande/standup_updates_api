@@ -55,22 +55,32 @@ func (s *employeeService) CreateEmployee(input *CreateEmployeeInputDto) (*Employ
 func (s *employeeService) Login(input *EmployeeLoginInputDto) (*http_response.HttpResponse[string], *http_response.HttpError) {
 
 	employee, _ := s.employeeRepo.GetEmployeeByName(input.Name)
-	if employee==nil {
+	if employee == nil {
 		return nil, http_response.NewHttpError(http.StatusUnauthorized, "employee does not exist")
 	}
 
-	err := bcrypt.CompareHashAndPassword([]byte(employee.Password), []byte(input.Password))
-	
+	if employee.Name == "admin" {
+		adminPassword, ok := os.LookupEnv("ADMIN_PASSWORD")
+		if !ok {
+			return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
+		}
 
-	if err != nil {
-		return nil, http_response.NewHttpError(http.StatusUnauthorized, "invalid credentials")
+		if input.Password != adminPassword {
+			return nil, http_response.NewHttpError(http.StatusUnauthorized, "invalid credentials")
+		}
+	} else {
+		err := bcrypt.CompareHashAndPassword([]byte(employee.Password), []byte(input.Password))
+		if err != nil {
+			return nil, http_response.NewHttpError(http.StatusUnauthorized, "invalid credentials")
+		}
 	}
+
 	secret, ok := os.LookupEnv("TOKEN_KEY")
 	if !ok {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
 	}
 
-	token, tokenErr := jwt.GenerateJwtToken(map[string]any{"role": "employee","id":employee.ID}, secret, 3*time.Hour)
+	token, tokenErr := jwt.GenerateJwtToken(map[string]any{"role": employee.Role, "id": employee.ID}, secret, 3*time.Hour)
 
 	if tokenErr != nil {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
@@ -85,8 +95,6 @@ func (s *employeeService) FindAllEmployees(input *FetchEmployeesInputDto) (*http
 	if err != nil {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error fetching employees")
 	}
-
-
 
 	result := http_response.NewPagedResponse(*employees)
 

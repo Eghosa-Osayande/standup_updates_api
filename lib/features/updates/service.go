@@ -1,6 +1,7 @@
 package updates
 
 import (
+	"fmt"
 	"net/http"
 	"standup-api/lib/utils/http_response"
 )
@@ -22,7 +23,7 @@ type updateService struct {
 func (s *updateService) CreateUpdate(input *CreateUpdateInputDto) (*http_response.HttpResponse[UpdateDto], *http_response.HttpError) {
 	result, err := s.updateRepo.CreateUpdate(input)
 	if err != nil {
-		return nil, http_response.NewHttpError(http.StatusInternalServerError, "failed to create update")
+		return nil, http_response.NewHttpError(http.StatusInternalServerError, fmt.Sprintf("failed to create update: %s",err.Error()))
 	}
 
 	var response = http_response.NewSuccessResponse(*result)

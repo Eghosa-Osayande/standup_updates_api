@@ -29,6 +29,7 @@ func (r *employeeRepo) CreateEmployee(input *CreateEmployeeInputDto) (*EmployeeD
 	employee, err := r.db.CreateEmployee(context.Background(), database.CreateEmployeeParams{
 		Name:     input.Name,
 		Password: input.Password,
+		Role:     "employee",
 	})
 
 	if err != nil {

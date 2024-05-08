@@ -2,7 +2,6 @@ package main
 
 import (
 	"standup-api/lib/common/database"
-	"standup-api/lib/features/admin"
 	"standup-api/lib/features/employee"
 	"standup-api/lib/features/sprint"
 	"standup-api/lib/features/updates"
@@ -29,12 +28,6 @@ func main() {
 	router := gin.Default()
 
 	v1 := router.Group("/v1")
-
-	{
-		adminRepo := admin.NewAdminRepo(db)
-		adminservice := admin.NewAdminService(adminRepo)
-		admin.SetupAdminHandlers(v1, adminservice)
-	}
 
 	{
 		employeeRepo := employee.NewEmployeeRepo(db)

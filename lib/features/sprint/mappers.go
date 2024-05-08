@@ -8,8 +8,8 @@ import (
 func SprintModelToDto(m *database.Sprint) *SprintDto {
 	var id, _ = m.ID.Value()
 
-	startTimeFormatted:= dto.Json24HrTime(m.StandupStartTime.Time)
-	endTimeFormatted:= dto.Json24HrTime(m.StandupEndTime.Time)
+	startTimeFormatted:= dto.Json24HrTime(m.StandupStartTime.Time.UTC())
+	endTimeFormatted:= dto.Json24HrTime(m.StandupEndTime.Time.UTC())
 	
 	return &SprintDto{
 		ID:               id.(string),

@@ -5,6 +5,7 @@ import "time"
 type CreateEmployeeInputDto struct {
 	Name     string `json:"name" validate:"required"`
 	Password string `json:"password" validate:"required"`
+	Role    string `json:"role" validate:"required,oneof=employee admin"`
 }
 
 type EmployeeDto struct {
@@ -12,6 +13,7 @@ type EmployeeDto struct {
 	Name      string    `json:"name"`
 	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"created_at"`
+	Role    string `json:"role" validate:"required"`
 }
 
 type EmployeeLoginInputDto struct {

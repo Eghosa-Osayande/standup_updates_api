@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "3bbd0bdf-77d7-41b5-b526-5daa22ff7983",
+		"name": "Standup API Docs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15943143",
+		"_collection_link": "https://solar-sunset-128672.postman.co/workspace/53569505-6648-493b-8f88-107a8c4f5d97/collection/15943143-3bbd0bdf-77d7-41b5-b526-5daa22ff7983?action=share&source=collection_link&creator=15943143"
+	},
+	"item": [
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Login (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"admin\",\n    \"password\":\"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/employees/login",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"employees",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"admin\",\n    \"password\":\"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/employees/login",
+									"path": [
+										"employees",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 12:39:41 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTUyNjkxODEsImN1c3RvbV9jbGFpbXMiOnsiaWQiOiJhNjJmMmNjYS0wZDQ0LTExZWYtYWY1Zi04YmM1M2U4YTljNjYiLCJyb2xlIjoiYWRtaW4ifX0.o2ehj2fHlPaA1rnKGK4ohHOl_RQH4nfHl3BuXt0aAq4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login (Employee)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"John Doe\",\n    \"password\":\"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/employees/login",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"employees",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"John Doe\",\n    \"password\":\"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/employees/login",
+									"path": [
+										"employees",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 May 2024 14:50:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "257"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTUxOTA2NDgsImN1c3RvbV9jbGFpbXMiOnsiaWQiOiIzYmM1NjY1YS0wZDRhLTExZWYtOWZiMC1kZmRhNTJkYjIxYzMiLCJyb2xlIjoiZW1wbG95ZWUifX0.m_kLonUoGqtaE7234ihZ4OswGo6f2g0xEF4p7X4r-aA\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"password\": \"12345\",\n    \"role\": \"employee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/employees/create",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"employees",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"password\": \"12345\",\n    \"role\": \"employee\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/employees/create",
+									"path": [
+										"employees",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 May 2024 14:49:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "203"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3bc5665a-0d4a-11ef-9fb0-dfda52db21c3\",\n    \"name\": \"John Doe\",\n    \"password\": \"$2a$10$dUtRnwpZzHGHq8.Z3MPWF.l0gAS6.I7nej1C2ABoxq1xHltrD8.6i\",\n    \"created_at\": \"2024-05-08T14:49:55.326464+01:00\",\n    \"role\": \"employee\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"page\":1,\n    \"per_page\":20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/employees/all",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"employees",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch All",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"page\":1,\n    \"per_page\":20\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/employees/all",
+									"path": [
+										"employees",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 May 2024 14:51:11 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "485"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": \"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n            \"name\": \"admin\",\n            \"password\": \"$2a$10$d0VQ7cPV.BEoRoyH7wGHhuqsY6WoG6bFizVbckfH8HrMI8GRIS9rW\",\n            \"created_at\": \"2024-05-08T15:09:56.727435+01:00\",\n            \"role\": \"admin\"\n        },\n        {\n            \"id\": \"3bc5665a-0d4a-11ef-9fb0-dfda52db21c3\",\n            \"name\": \"John Doe\",\n            \"password\": \"$2a$10$dUtRnwpZzHGHq8.Z3MPWF.l0gAS6.I7nej1C2ABoxq1xHltrD8.6i\",\n            \"created_at\": \"2024-05-08T14:49:55.326464+01:00\",\n            \"role\": \"employee\"\n        }\n    ],\n    \"cursor\": {\n        \"next_page\": 2,\n        \"per_page\": 20\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sprint",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Sprint 1\",\n    \"standup_start_time\": \"13:00\",\n    \"standup_end_time\": \"13:09\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/sprints/create",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"sprints",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Sprint 1\",\n    \"standup_start_time\": \"13:00\",\n    \"standup_end_time\": \"13:09\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/sprints/create",
+									"path": [
+										"sprints",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 13:10:51 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"8f2469b6-0e05-11ef-bc83-070503e341bb\",\n    \"name\": \"Sprint 1\",\n    \"created_at\": \"2024-05-09T13:10:51.092417+01:00\",\n    \"standup_start_time\": \"13:00 UTC\",\n    \"standup_end_time\": \"13:09 UTC\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{employee_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"page\":1,\n    \"per_page\":20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/sprints/all",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"sprints",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch All",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"page\":1,\n    \"per_page\":20\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/sprints/all",
+									"path": [
+										"sprints",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 12:58:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2017"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": \"c634ede2-0e03-11ef-aeef-97c3964a02ee\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:58:04.47782+01:00\",\n            \"standup_start_time\": \"12:40 UTC\",\n            \"standup_end_time\": \"12:50 UTC\"\n        },\n        {\n            \"id\": \"94d2b4e6-0e03-11ef-bfda-9f88027f4887\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:56:41.626178+01:00\",\n            \"standup_start_time\": \"12:40 UTC\",\n            \"standup_end_time\": \"12:50 UTC\"\n        },\n        {\n            \"id\": \"7cf44214-0e02-11ef-b635-c3c5da9025eb\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:48:52.084536+01:00\",\n            \"standup_start_time\": \"12:40 UTC\",\n            \"standup_end_time\": \"12:50 UTC\"\n        },\n        {\n            \"id\": \"75e9c7d8-0e01-11ef-a4bd-e794c3f16063\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:41:30.777948+01:00\",\n            \"standup_start_time\": \"12:40 UTC\",\n            \"standup_end_time\": \"12:50 UTC\"\n        },\n        {\n            \"id\": \"72686a2e-0e01-11ef-a4bd-6faf8f168841\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:41:24.895688+01:00\",\n            \"standup_start_time\": \"12:40 UTC\",\n            \"standup_end_time\": \"13:50 UTC\"\n        },\n        {\n            \"id\": \"445991f8-0e01-11ef-a4bd-672b7db35147\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-09T12:40:07.615729+01:00\",\n            \"standup_start_time\": \"13:00 UTC\",\n            \"standup_end_time\": \"13:10 UTC\"\n        },\n        {\n            \"id\": \"851fb2cc-0d4c-11ef-85d1-0faea2d6136e\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-08T15:06:17.384654+01:00\",\n            \"standup_start_time\": \"13:00 UTC\",\n            \"standup_end_time\": \"13:10 UTC\"\n        },\n        {\n            \"id\": \"70d3d01e-0d4c-11ef-91e5-0ffe4d67c34f\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-08T15:05:43.330587+01:00\",\n            \"standup_start_time\": \"13:00 UTC\",\n            \"standup_end_time\": \"13:10 UTC\"\n        },\n        {\n            \"id\": \"564890ae-0d4c-11ef-811d-6f77bd20cd43\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-08T15:04:58.79721+01:00\",\n            \"standup_start_time\": \"13:00 UTC\",\n            \"standup_end_time\": \"13:10 UTC\"\n        },\n        {\n            \"id\": \"bece9322-0d4b-11ef-a9c9-033fb62c5573\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-08T15:00:44.664092+01:00\",\n            \"standup_start_time\": \"13:00 UTC\",\n            \"standup_end_time\": \"13:10 UTC\"\n        },\n        {\n            \"id\": \"8f8288cc-0d4a-11ef-9fb0-b7a8e7eba9c6\",\n            \"name\": \"Sprint 1\",\n            \"created_at\": \"2024-05-08T14:52:15.820271+01:00\",\n            \"standup_start_time\": \"10:00 UTC\",\n            \"standup_end_time\": \"10:10 UTC\"\n        }\n    ],\n    \"cursor\": {\n        \"next_page\": 2,\n        \"per_page\": 20\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Updates",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{employee_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employee_id\":\"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n    \"sprint_id\":\"8f2469b6-0e05-11ef-bc83-070503e341bb\",\n    \"yesterday\":\"Nothing\",\n    \"today\":\"Nothing\",\n    \"blocked_by\":[],\n    \"breakaway\":\"Nothing\",\n    \"tasks\":[]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/updates/create",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"updates",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"employee_id\":\"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n    \"sprint_id\":\"8f2469b6-0e05-11ef-bc83-070503e341bb\",\n    \"yesterday\":\"Nothing\",\n    \"today\":\"Nothing\",\n    \"blocked_by\":[],\n    \"breakaway\":\"Nothing\",\n    \"tasks\":[]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "/updates/create",
+									"path": [
+										"updates",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 13:11:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "371"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": \"9e4f809c-0e05-11ef-bc83-67531e5b6061\",\n        \"employee_id\": \"a62f2cca-0d44-11ef-af5f-8bc53e8a9c66\",\n        \"sprint_id\": \"8f2469b6-0e05-11ef-bc83-070503e341bb\",\n        \"created_at\": \"2024-05-09T13:11:16.540322+01:00\",\n        \"yesterday\": \"Nothing\",\n        \"today\": \"Nothing\",\n        \"blocked_by\": [],\n        \"breakaway\": \"Nothing\",\n        \"check_in_time\": \"13:11 UTC\",\n        \"status\": \"after standup\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTUxNTkxMTQsImN1c3RvbV9jbGFpbXMiOnsicm9sZSI6ImVtcGxveWVlIn19._Oy6-HujWxibRMMBhV0VlM3OovFj4udigDko2M8_XLI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employee_id\":\"h\",\n    \"sprint_id\":\"j\",\n    \"yesterday\":\"Nothing\",\n    \"today\":\"Nothing\",\n    \"blocked_by\":[],\n    \"breakaway\":\"Nothing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/updates/create",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"updates",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "employee_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

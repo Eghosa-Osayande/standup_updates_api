@@ -2,6 +2,7 @@ package updates
 
 import (
 	"context"
+	"log"
 	"standup-api/lib/common/database"
 	"standup-api/lib/utils/http_response"
 	"time"
@@ -37,15 +38,24 @@ func (r *updatesRepo) CreateUpdate(input *CreateUpdateInputDto) (*UpdateDto, err
 		return nil, err
 	}
 
-	checkInTime := time.Now()
+	 timeToDuration:= func(t time.Time) time.Duration{
+		return time.Duration(t.Hour()*int(time.Hour) + t.Minute()*int(time.Minute))
+	}
+	checkedInAt:=time.Now().UTC()
+	log.Println(checkedInAt)
+	checkInDuration := timeToDuration(checkedInAt)
+	start:= timeToDuration(sprint.StandupStartTime.Time.UTC())
+	end:= timeToDuration(sprint.StandupEndTime.Time.UTC())
+
+	
 	var status UpdateStatus
 
-	if checkInTime.After(sprint.StandupStartTime.Time) && checkInTime.Before(sprint.StandupEndTime.Time) {
+	if checkInDuration>=start && checkInDuration<=end {
 		status=StatusWithin
-	} else if checkInTime.After(sprint.StandupEndTime.Time) {
-		status=StatusAfter
-	}else {
+	} else if checkInDuration<start {
 		status=StatusBefore
+	}else {
+		status=StatusAfter
 	}
 
 
@@ -57,7 +67,7 @@ func (r *updatesRepo) CreateUpdate(input *CreateUpdateInputDto) (*UpdateDto, err
 		BlockedBy:  input.BlockedBy,
 		Breakaway:  input.Breakaway,
 		CheckInTime: pgtype.Timestamptz{
-			Time:  checkInTime,
+			Time:  checkedInAt,
 			Valid: true,
 		},
 		Status: string(status),

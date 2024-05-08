@@ -7,30 +7,31 @@ import (
 	"time"
 )
 
-
-type JsonDate time.Time
 // "2006-01-02T15:04:05"
-var dateFormat = "2006-01-02"
 
-func (j *JsonDate) UnmarshalJSON(b []byte) error {
+// type JsonDate time.Time
+
+// var dateFormat = "2006-01-02"
+
+// func (j *JsonDate) UnmarshalJSON(b []byte) error {
 	
-	s := strings.Trim(string(b), "\"")
-	t, err := time.ParseInLocation(dateFormat, s, time.UTC)
-	if err != nil {
-		return fmt.Errorf("error parsing date %s, required format %s", s, dateFormat)
-	}
+// 	s := strings.Trim(string(b), "\"")
+// 	t, err := time.Parse(dateFormat, s)
+// 	if err != nil {
+// 		return fmt.Errorf("error parsing date %s, required format %s", s, dateFormat)
+// 	}
 
-	*j = JsonDate(t)
-	return nil
-}
+// 	*j = JsonDate(t)
+// 	return nil
+// }
 
-func (j JsonDate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(time.Time(j).Format(dateFormat))
-}
+// func (j JsonDate) MarshalJSON() ([]byte, error) {
+// 	return json.Marshal(time.Time(j).Format(dateFormat))
+// }
 
-func (j *JsonDate) ToTime() time.Time {
-	return time.Time(*j)
-}
+// func (j *JsonDate) ToTime() time.Time {
+// 	return time.Time(*j)
+// }
 
 type Json24HrTime time.Time
 
@@ -39,7 +40,7 @@ var hrs24Format = "15:04"
 func (j *Json24HrTime) UnmarshalJSON(b []byte) error {
 	
 	s := strings.Trim(string(b), "\"")
-	t, err := time.ParseInLocation(hrs24Format, s, time.UTC)
+	t, err := time.ParseInLocation(hrs24Format, s,time.UTC)
 	if err != nil {
 		return fmt.Errorf("error parsing date %s, required format %s", s, hrs24Format)
 	}
@@ -49,8 +50,8 @@ func (j *Json24HrTime) UnmarshalJSON(b []byte) error {
 }
 
 func (j Json24HrTime) MarshalJSON() ([]byte, error) {
-	timeString := time.Time(j).UTC().Format(hrs24Format)
-	return json.Marshal(timeString)
+	timeString := time.Time(j).Format(hrs24Format)
+	return json.Marshal(timeString + " UTC")
 }
 
 func (j *Json24HrTime) ToTime() time.Time {

@@ -13,6 +13,7 @@ type Employee struct {
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	Name      string             `db:"name" json:"name"`
 	Password  string             `db:"password" json:"password"`
+	Role      string             `db:"role" json:"role"`
 }
 
 type Sprint struct {
