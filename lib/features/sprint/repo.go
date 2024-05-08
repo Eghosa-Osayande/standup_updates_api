@@ -1,6 +1,9 @@
 package sprint
 
-import "standup-api/lib/utils/http_response"
+import (
+	"standup-api/lib/common/database"
+	"standup-api/lib/utils/http_response"
+)
 
 type SprintsRepository interface {
 	CreateSprint(*CreateSprintInputDto) (*SprintDto, error)
@@ -8,11 +11,14 @@ type SprintsRepository interface {
 	FetchAllSprints(input *FetchSprintsInputDto) (*http_response.CursorPage[SprintDto], error)
 }
 
-func NewSprintRepo() SprintsRepository {
-	return &sprintRepo{}
+func NewSprintRepo(db *database.Database) SprintsRepository {
+	return &sprintRepo{
+		db: db,
+	}
 }
 
 type sprintRepo struct {
+	db *database.Database
 }
 
 func (r *sprintRepo) CreateSprint(input *CreateSprintInputDto) (*SprintDto, error) {

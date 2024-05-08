@@ -21,5 +21,6 @@ type EmployeeLoginInputDto struct {
 }
 
 type FetchEmployeesInputDto struct {
-	Cursor string `json:"cursor" validate:"required"`
+	Page int `json:"page" validate:"required"`
+	PerPage int `json:"per_page" validate:"required"`
 }

@@ -6,9 +6,14 @@ type HttpResponse[T any] struct {
 	Data    T      `json:"data"`
 }
 
+type Cursor struct{
+	NextPage int `json:"next_page"`
+	PerPage int `json:"per_page"`
+}
+
 type CursorPage[T any] struct {
 	Data   []T    `json:"data"`
-	Cursor string `json:"cursor"`
+	Cursor *Cursor `json:"cursor"`
 }
 
 type HttpPagedResponse[T any] struct {

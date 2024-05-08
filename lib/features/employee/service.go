@@ -1,6 +1,7 @@
 package employee
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"standup-api/lib/utils/http_response"
@@ -28,9 +29,15 @@ type employeeService struct {
 
 func (s *employeeService) CreateEmployee(input *CreateEmployeeInputDto) (*EmployeeDto, *http_response.HttpError) {
 
+	emp, _ := s.employeeRepo.GetEmployeeByName(input.Name)
+	if emp != nil {
+		return nil, http_response.NewHttpError(http.StatusBadRequest, "employee already exists")
+	}
+
 	hashedPass, hashErr := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 
 	if hashErr != nil {
+		log.Println(hashErr)
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error creating employee")
 	}
 
@@ -38,6 +45,7 @@ func (s *employeeService) CreateEmployee(input *CreateEmployeeInputDto) (*Employ
 
 	employee, err := s.employeeRepo.CreateEmployee(input)
 	if err != nil {
+		log.Println(err)
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error creating employee")
 	}
 
@@ -46,15 +54,13 @@ func (s *employeeService) CreateEmployee(input *CreateEmployeeInputDto) (*Employ
 
 func (s *employeeService) Login(input *EmployeeLoginInputDto) (*http_response.HttpResponse[string], *http_response.HttpError) {
 
-	employee, err := s.employeeRepo.GetEmployeeByName(input.Name)
-	if err != nil {
-		return nil, http_response.NewHttpError(http.StatusUnauthorized, "invalid credentials")
+	employee, _ := s.employeeRepo.GetEmployeeByName(input.Name)
+	if employee==nil {
+		return nil, http_response.NewHttpError(http.StatusUnauthorized, "employee does not exist")
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(employee.Password), []byte(input.Password))
-	if 2 != 1 {
-		err = nil
-	}
+	err := bcrypt.CompareHashAndPassword([]byte(employee.Password), []byte(input.Password))
+	
 
 	if err != nil {
 		return nil, http_response.NewHttpError(http.StatusUnauthorized, "invalid credentials")
@@ -69,7 +75,7 @@ func (s *employeeService) Login(input *EmployeeLoginInputDto) (*http_response.Ht
 	if tokenErr != nil {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
 	}
-	response := http_response.NewSuccessResponse[string](token)
+	response := http_response.NewSuccessResponse(token)
 	return &response, nil
 }
 
