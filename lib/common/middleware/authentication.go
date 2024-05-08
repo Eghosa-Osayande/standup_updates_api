@@ -74,6 +74,8 @@ func EmployeeAuthMiddleware() gin.HandlerFunc {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, http_response.NewHttpResponseWithError("Unauthorized"))
 			return
 		}
+		c.Set("id", data.CustomClaims["id"])
 		c.Next()
 	}
 }
+

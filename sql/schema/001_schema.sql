@@ -36,7 +36,8 @@ Create table if not exists updates (
 	blocked_by text[] NULL,
 	breakaway text NOT NULL,
 	check_in_time TIMESTAMPTZ NOT NULL,
-	status text NOT NULL
+	status text NOT NULL,
+	tasks text[] NULL
 
 	
 );

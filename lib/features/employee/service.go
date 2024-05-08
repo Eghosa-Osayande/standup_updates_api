@@ -70,7 +70,7 @@ func (s *employeeService) Login(input *EmployeeLoginInputDto) (*http_response.Ht
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
 	}
 
-	token, tokenErr := jwt.GenerateJwtToken(map[string]any{"role": "employee"}, secret, 60*time.Minute)
+	token, tokenErr := jwt.GenerateJwtToken(map[string]any{"role": "employee","id":employee.ID}, secret, 60*time.Minute)
 
 	if tokenErr != nil {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
@@ -86,7 +86,7 @@ func (s *employeeService) FindAllEmployees(input *FetchEmployeesInputDto) (*http
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error fetching employees")
 	}
 
-	
+
 
 	result := http_response.NewPagedResponse(*employees)
 

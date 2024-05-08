@@ -11,6 +11,7 @@ type CreateUpdateInputDto struct {
 	Yesterday   string       `json:"yesterday" validate:"required"`
 	Today       string       `json:"today" validate:"required"`
 	BlockedBy   []string     `json:"blocked_by" validate:"required"`
+	Tasks   []string     `json:"tasks" validate:"required"`
 	Breakaway   string       `json:"breakaway" validate:"required"`
 }
 
@@ -26,7 +27,7 @@ type FetchUpdatesWhereInputDto struct {
 type UpdateDto struct {
 	ID           string       `json:"id"`
 	EmployeeID   string       `json:"employee_id"`
-	EmployeeName string       `json:"employee_name"`
+	// EmployeeName string       `json:"employee_name"`
 	SprintID     string       `json:"sprint_id"`
 	CreatedAt    time.Time    `json:"created_at"`
 	Yesterday    string       `json:"yesterday"`
@@ -37,10 +38,10 @@ type UpdateDto struct {
 	Status       UpdateStatus `json:"status"`
 }
 
-type UpdateStatus int
+type UpdateStatus string
 
 const (
-	StatusBefore UpdateStatus = iota
-	StatusAfter
-	StatusWithin
+	StatusBefore UpdateStatus = "before standup";
+	StatusAfter UpdateStatus = "after standup";
+	StatusWithin UpdateStatus = "within standup"
 )

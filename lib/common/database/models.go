@@ -34,4 +34,5 @@ type Update struct {
 	Breakaway   string             `db:"breakaway" json:"breakaway"`
 	CheckInTime pgtype.Timestamptz `db:"check_in_time" json:"check_in_time"`
 	Status      string             `db:"status" json:"status"`
+	Tasks       []string           `db:"tasks" json:"tasks"`
 }

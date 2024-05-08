@@ -17,3 +17,10 @@ limit
 offset
     sqlc.narg('offset');
 
+-- name: FetchSprintById :one
+Select
+    *
+from
+    sprints
+where
+    id = $1;

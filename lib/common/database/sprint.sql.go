@@ -81,3 +81,25 @@ func (q *Queries) FetchAllSprint(ctx context.Context, arg FetchAllSprintParams) 
 	}
 	return items, nil
 }
+
+const fetchSprintById = `-- name: FetchSprintById :one
+Select
+    id, created_at, name, standup_start_time, standup_end_time
+from
+    sprints
+where
+    id = $1
+`
+
+func (q *Queries) FetchSprintById(ctx context.Context, id pgtype.UUID) (Sprint, error) {
+	row := q.db.QueryRow(ctx, fetchSprintById, id)
+	var i Sprint
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.Name,
+		&i.StandupStartTime,
+		&i.StandupEndTime,
+	)
+	return i, err
+}
