@@ -9,28 +9,21 @@ import (
 )
 
 type Employee struct {
-	CountID   int64              `db:"count_id" json:"count_id"`
 	ID        pgtype.UUID        `db:"id" json:"id"`
 	CreatedAt pgtype.Timestamptz `db:"created_at" json:"created_at"`
-	UpdatedAt pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
 	Name      string             `db:"name" json:"name"`
 	Password  string             `db:"password" json:"password"`
 }
 
 type Sprint struct {
-	CountID          int64              `db:"count_id" json:"count_id"`
 	ID               pgtype.UUID        `db:"id" json:"id"`
 	CreatedAt        pgtype.Timestamptz `db:"created_at" json:"created_at"`
-	UpdatedAt        pgtype.Timestamptz `db:"updated_at" json:"updated_at"`
 	Name             string             `db:"name" json:"name"`
-	StartedAt        pgtype.Timestamptz `db:"started_at" json:"started_at"`
-	EndedAt          pgtype.Timestamptz `db:"ended_at" json:"ended_at"`
 	StandupStartTime pgtype.Timestamptz `db:"standup_start_time" json:"standup_start_time"`
 	StandupEndTime   pgtype.Timestamptz `db:"standup_end_time" json:"standup_end_time"`
 }
 
 type Update struct {
-	CountID     int64              `db:"count_id" json:"count_id"`
 	ID          pgtype.UUID        `db:"id" json:"id"`
 	CreatedAt   pgtype.Timestamptz `db:"created_at" json:"created_at"`
 	EmployeeID  pgtype.UUID        `db:"employee_id" json:"employee_id"`

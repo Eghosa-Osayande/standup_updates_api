@@ -11,8 +11,7 @@ from
     employees
 
 ORDER BY
-    employees.updated_at DESC,
-    employees.count_id DESC
+    employees.created_at DESC
 
 limit
     sqlc.narg('limit')

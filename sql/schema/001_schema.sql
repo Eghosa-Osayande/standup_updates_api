@@ -5,22 +5,18 @@ SET TIMEZONE TO 'UTC';
 
 
 Create table if not exists employees (
-	count_id BIGSERIAL NOT NULL,
+
 	id uuid primary key DEFAULT uuid_generate_v1mc() NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
-	updated_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
 	name text NOT NULL,
 	password text NOT NULL
 );
 
 Create table if not exists sprints (
-	count_id BIGSERIAL NOT NULL,
+
 	id uuid primary key DEFAULT uuid_generate_v1mc() NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
-	updated_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
 	name text NOT NULL,
-	started_at TIMESTAMPTZ NOT NULL,
-	ended_at TIMESTAMPTZ NOT NULL,
 	standup_start_time TIMESTAMPTZ NOT NULL,
 	standup_end_time TIMESTAMPTZ NOT NULL
 );
@@ -28,10 +24,9 @@ Create table if not exists sprints (
 
 
 Create table if not exists updates (
-	count_id BIGSERIAL  NOT NULL,
+
 	id uuid primary key DEFAULT uuid_generate_v1mc() NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
-
 	employee_id uuid NOT NULL,
 	FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE,
 	sprint_id uuid NOT NULL,
@@ -48,11 +43,11 @@ Create table if not exists updates (
 
 
 
-Create INDEX employees_pagination_index ON employees (updated_at, count_id);
+Create INDEX employees_pagination_index ON employees (created_at);
 
-Create INDEX sprints_pagination_index ON sprints (updated_at, count_id);
+Create INDEX sprints_pagination_index ON sprints (created_at);
 
-Create INDEX updates_pagination_index ON updates (created_at, count_id);
+Create INDEX updates_pagination_index ON updates (created_at);
 
 
 

@@ -86,6 +86,8 @@ func (s *employeeService) FindAllEmployees(input *FetchEmployeesInputDto) (*http
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error fetching employees")
 	}
 
+	
+
 	result := http_response.NewPagedResponse(*employees)
 
 	return &result, nil

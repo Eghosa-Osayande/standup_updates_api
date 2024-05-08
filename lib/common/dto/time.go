@@ -27,3 +27,7 @@ func (j *JsonDate) UnmarshalJSON(b []byte) error {
 func (j JsonDate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(time.Time(j).Format(dateFormat))
 }
+
+func (j *JsonDate) ToTime() time.Time {
+	return time.Time(*j)
+}

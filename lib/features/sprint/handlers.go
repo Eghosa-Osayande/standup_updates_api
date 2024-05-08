@@ -20,8 +20,6 @@ func SetupSprintHandlers(r *gin.RouterGroup, sprintService SprintService) {
 	{
 		adminProtectedRouter.Use(middleware.AdminAuthMiddleware())
 		adminProtectedRouter.POST("/create", handler.createSprint)
-		adminProtectedRouter.POST("/start", handler.startSprint)
-		// adminSprintRouter.POST("/end", handler.endSprint)
 	}
 
 	employeeProtectedRouter := sprintRouter.Group("")
@@ -39,30 +37,18 @@ func (h *SprintHandlers) createSprint(c *gin.Context) {
 		return
 	}
 
-	_, err = h.sprintService.CreateSprint(input)
+	result, err := h.sprintService.CreateSprint(input)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, http_response.NewHttpResponseWithError(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, input)
+	c.JSON(http.StatusOK, result)
 }
 
 
 
-func (h *SprintHandlers) startSprint(c *gin.Context) {
-	
-
-	_, err := h.sprintService.StartSprint()
-
-	if err != nil {
-		c.AbortWithStatusJSON(err.Code, err.ToResponse())
-		return
-	}
-
-	c.JSON(http.StatusOK,"")
-}
 
 func (h *SprintHandlers) fetchAllSprints(c *gin.Context) {
 
