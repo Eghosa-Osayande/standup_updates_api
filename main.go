@@ -4,6 +4,7 @@ import (
 	"standup-api/lib/features/admin"
 	"standup-api/lib/features/employee"
 	"standup-api/lib/features/sprint"
+	"standup-api/lib/features/updates"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -34,6 +35,11 @@ func main() {
 		sprintRepo := sprint.NewSprintRepo()
 		sprintService := sprint.NewSprintService(sprintRepo)
 		sprint.SetupSprintHandlers(v1, sprintService)
+	}
+	{
+		updatesRepo := updates.NewUpdatesRepo()
+		updatesService := updates.NewUpdateService(updatesRepo)
+		updates.SetupUpdateHandlers(v1, updatesService)
 	}
 
 	

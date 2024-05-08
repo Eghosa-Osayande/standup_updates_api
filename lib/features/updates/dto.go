@@ -3,14 +3,12 @@ package updates
 import "time"
 
 type CreateUpdateInputDto struct {
-	EmployeeID  string       `json:"employee_id"`
-	SprintID    string       `json:"sprint_id"`
-	Yesterday   string       `json:"yesterday"`
-	Today       string       `json:"today"`
-	BlockedBy   []string     `json:"blocked_by"`
-	Breakaway   string       `json:"breakaway"`
-	CheckInTime time.Time    `json:"check_in_time"`
-	Status      UpdateStatus `json:"status"`
+	EmployeeID  string       `json:"employee_id" validate:"required"`
+	SprintID    string       `json:"sprint_id" validate:"required"`
+	Yesterday   string       `json:"yesterday" validate:"required"`
+	Today       string       `json:"today" validate:"required"`
+	BlockedBy   []string     `json:"blocked_by" validate:"required"`
+	Breakaway   string       `json:"breakaway" validate:"required"`
 }
 
 type FetchUpdatesWhereInputDto struct {
