@@ -9,7 +9,7 @@ import (
 
 
 type JsonDate time.Time
-
+// "2006-01-02T15:04:05"
 var dateFormat = "2006-01-02"
 
 func (j *JsonDate) UnmarshalJSON(b []byte) error {
@@ -49,7 +49,8 @@ func (j *Json24HrTime) UnmarshalJSON(b []byte) error {
 }
 
 func (j Json24HrTime) MarshalJSON() ([]byte, error) {
-	return json.Marshal(time.Time(j).Format(hrs24Format))
+	timeString := time.Time(j).UTC().Format(hrs24Format)
+	return json.Marshal(timeString)
 }
 
 func (j *Json24HrTime) ToTime() time.Time {

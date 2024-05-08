@@ -32,11 +32,10 @@ func (s *adminService) Login(input *AdminLoginInputDto) (*AdminLoginOutputDto, *
 
 	secret, ok := os.LookupEnv("TOKEN_KEY")
 	if !ok {
-		// log
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")
 	}
 
-	token, err := jwt.GenerateJwtToken(map[string]any{"role": "admin"}, secret, 60*time.Minute)
+	token, err := jwt.GenerateJwtToken(map[string]any{"role": "admin"}, secret, 3*time.Hour)
 
 	if err != nil {
 		return nil, http_response.NewHttpError(http.StatusInternalServerError, "error generating token")

@@ -1,6 +1,6 @@
 -- name: CreateSprint :one
 Insert into
-    sprints ( name, standup_start_time, standup_end_time)
+    sprints (name, standup_start_time, standup_end_time)
 values
     ( $1, $2, $3) Returning *;
 

@@ -17,8 +17,8 @@ type SprintDto struct {
 	ID               string    `json:"id"`
 	Name             string    `json:"name"`
 	CreatedAt        time.Time `json:"created_at"`
-	StandupStartTime time.Time `json:"standup_start_time"`
-	StandupEndTime   time.Time `json:"standup_end_time"`
+	StandupStartTime *dto.Json24HrTime `json:"standup_start_time"`
+	StandupEndTime   *dto.Json24HrTime `json:"standup_end_time"`
 }
 
 type FetchSprintsInputDto struct {

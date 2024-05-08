@@ -2,17 +2,20 @@ package sprint
 
 import (
 	"standup-api/lib/common/database"
-	"time"
+	"standup-api/lib/common/dto"
 )
 
 func SprintModelToDto(m *database.Sprint) *SprintDto {
 	var id, _ = m.ID.Value()
-	startTime, _ := m.StandupStartTime.Value()
-	endTime, _ := m.StandupEndTime.Value()
+
+	startTimeFormatted:= dto.Json24HrTime(m.StandupStartTime.Time)
+	endTimeFormatted:= dto.Json24HrTime(m.StandupEndTime.Time)
+	
 	return &SprintDto{
 		ID:               id.(string),
 		Name:             m.Name,
-		StandupStartTime: startTime.(time.Time),
-		StandupEndTime:   endTime.(time.Time),
+		CreatedAt:        m.CreatedAt.Time,
+		StandupStartTime: &startTimeFormatted,
+		StandupEndTime:   &endTimeFormatted,
 	}
 }

@@ -13,7 +13,7 @@ import (
 
 const createSprint = `-- name: CreateSprint :one
 Insert into
-    sprints ( name, standup_start_time, standup_end_time)
+    sprints (name, standup_start_time, standup_end_time)
 values
     ( $1, $2, $3) Returning id, created_at, name, standup_start_time, standup_end_time
 `

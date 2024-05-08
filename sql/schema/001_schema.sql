@@ -5,7 +5,6 @@ SET TIMEZONE TO 'UTC';
 
 
 Create table if not exists employees (
-
 	id uuid primary key DEFAULT uuid_generate_v1mc() NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
 	name text NOT NULL,
@@ -13,7 +12,6 @@ Create table if not exists employees (
 );
 
 Create table if not exists sprints (
-
 	id uuid primary key DEFAULT uuid_generate_v1mc() NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT timezone('utc', now()) NOT NULL,
 	name text NOT NULL,

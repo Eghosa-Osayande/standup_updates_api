@@ -25,25 +25,25 @@ type sprintRepo struct {
 }
 
 func (r *sprintRepo) CreateSprint(input *CreateSprintInputDto) (*SprintDto, error) {
-	sprint,err:=r.db.CreateSprint(context.Background(), database.CreateSprintParams{
-		Name:             "",
+	sprint, err := r.db.CreateSprint(context.Background(), database.CreateSprintParams{
+		Name: input.Name,
 		StandupStartTime: pgtype.Timestamptz{
-			Time:input.StandupStartTime.ToTime(),
+			Time:  input.StandupStartTime.ToTime(),
 			Valid: true,
 		},
-		StandupEndTime:   pgtype.Timestamptz{
-			Time:input.StandupEndTime.ToTime(),
+		StandupEndTime: pgtype.Timestamptz{
+			Time:  input.StandupEndTime.ToTime(),
 			Valid: true,
 		},
 	})
 	if err != nil {
 		return nil, err
 	}
+
 	return SprintModelToDto(&sprint), nil
 }
 
-
-func (r *sprintRepo) FetchAllSprints(input *FetchSprintsInputDto) (*http_response.CursorPage[SprintDto], error){
+func (r *sprintRepo) FetchAllSprints(input *FetchSprintsInputDto) (*http_response.CursorPage[SprintDto], error) {
 
 	sprints, err := r.db.FetchAllSprint(context.Background(), database.FetchAllSprintParams{
 		Offset: pgtype.Int4{Int32: int32((input.Page - 1) * input.PerPage), Valid: true},
