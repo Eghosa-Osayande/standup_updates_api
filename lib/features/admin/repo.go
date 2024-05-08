@@ -1,10 +1,9 @@
 package admin
 
-
-type AdminRepo interface {
+type AdminRepository interface {
 }
 
-func NewAdminRepo() AdminRepo {
+func NewAdminRepo() AdminRepository {
 	return &adminRepo{}
 }
 

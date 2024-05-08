@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-playground/validator/v10"
 	"io"
+	"log"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
 )
 
 func decodeRequestBody[T any](closer io.Reader) (*T, error) {
@@ -14,7 +16,8 @@ func decodeRequestBody[T any](closer io.Reader) (*T, error) {
 	output := new(T)
 
 	if err := json.NewDecoder(closer).Decode(output); err != nil {
-		return nil, errors.New("bad request. Invalid JSON")
+		log.Println(err)
+		return nil, errors.New(err.Error())
 	}
 
 	return output, nil

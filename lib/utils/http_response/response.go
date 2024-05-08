@@ -13,3 +13,11 @@ func NewHttpResponseWithError[T *any](message string) HttpResponse[T] {
 		Data:    nil,
 	}
 }
+
+func NewResponseFromError(err *HttpError) HttpResponse[any] {
+	return HttpResponse[any]{
+		Status:  false,
+		Message: err.Message,
+		Data:    nil,
+	}
+}

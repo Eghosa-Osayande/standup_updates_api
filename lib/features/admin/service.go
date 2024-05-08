@@ -11,7 +11,7 @@ type AdminService interface {
 	Login(*AdminLoginInputDto) (*AdminLoginOutputDto, error)
 }
 
-func NewAdminService(repo AdminRepo) AdminService {
+func NewAdminService(repo AdminRepository) AdminService {
 	return &adminService{}
 }
 
